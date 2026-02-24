@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { pages } from '../data/content';
 import { ArrowRight, CalendarDays } from 'lucide-react';
-import imageblog from "../assets/servicesimages/blog.jpg";
+const imageblog = "/servicesimages/blog.jpg";
 
 const Blog = () => {
     const { posts } = pages.blog;
@@ -17,7 +17,7 @@ const Blog = () => {
                 alignItems: 'center',
                 justifyContent: 'center',
                 overflow: 'hidden',
-                background: '#000'
+                background: 'var(--color-bg)'
             }}>
                 <div style={{
                     position: 'absolute',
@@ -52,7 +52,7 @@ const Blog = () => {
                         transition={{ delay: 0.3, duration: 0.8 }}
                         style={{
                             fontSize: '18px',
-                            color: '#ccc',
+                            color: 'var(--color-text-muted)',
                             maxWidth: '600px',
                             margin: '0 auto',
                             fontWeight: '300'
@@ -62,7 +62,7 @@ const Blog = () => {
                     </motion.p>
                 </div>
             </section>
-            <section style={{ padding: '100px 0', background: '#0a0a0a' }}>
+            <section style={{ padding: '100px 0', background: 'var(--color-bg)' }}>
                 <div className="container">
                     <div style={{
                         display: 'grid',
@@ -78,9 +78,9 @@ const Blog = () => {
                                 transition={{ delay: index * 0.1, duration: 0.5 }}
                                 whileHover={{ y: -8 }}
                                 style={{
-                                    background: '#111',
+                                    background: 'var(--color-card-bg)',
                                     borderRadius: '16px',
-                                    border: '1px solid #222',
+                                    border: '1px solid var(--color-border)',
                                     overflow: 'hidden',
                                     transition: 'all 0.3s ease'
                                 }}
@@ -110,7 +110,7 @@ const Blog = () => {
                                     </h2>
 
                                     <p style={{
-                                        color: '#888',
+                                        color: 'var(--color-text-muted)',
                                         fontSize: '16px',
                                         lineHeight: '1.6',
                                         marginBottom: '30px',
@@ -124,7 +124,7 @@ const Blog = () => {
                                         alignItems: 'center',
                                         gap: '10px',
                                         background: 'transparent',
-                                        color: '#fff',
+                                        color: 'var(--color-text)',
                                         fontSize: '14px',
                                         fontWeight: '600',
                                         padding: 0,

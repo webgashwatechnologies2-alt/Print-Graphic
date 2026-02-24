@@ -39,7 +39,7 @@ const TermsCondition = () => {
     ];
 
     return (
-        <div className="terms-page" style={{ background: '#000', minHeight: '100vh', color: '#fff' }}>
+        <div className="terms-page" style={{ background: 'var(--color-bg)', minHeight: '100vh', color: 'var(--color-text)' }}>
             {/* Hero Section */}
             <section style={{
                 height: '50vh',
@@ -52,7 +52,7 @@ const TermsCondition = () => {
             }}>
                 <div style={{
                     position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
-                    backgroundImage: `linear-gradient(rgba(0,0,0,0.3), #000 100%), url(${heroBg})`,
+                    backgroundImage: `linear-gradient(rgba(0,0,0,0.3), var(--color-bg) 100%), url(${heroBg})`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     zIndex: 0
@@ -92,8 +92,8 @@ const TermsCondition = () => {
                             viewport={{ once: true }}
                             style={{ marginBottom: '60px', textAlign: 'center' }}
                         >
-                            <h2 style={{ fontSize: '32px', marginBottom: '20px' }}>Our Working <span style={{ color: 'var(--color-gold)' }}>Protocol</span></h2>
-                            <p style={{ color: '#ccc', fontSize: '18px', lineHeight: '1.8' }}>
+                            <h2 style={{ fontSize: '32px', marginBottom: '20px', color: 'var(--color-text)' }}>Our Working <span style={{ color: 'var(--color-gold)' }}>Protocol</span></h2>
+                            <p style={{ color: 'var(--color-text-muted)', fontSize: '18px', lineHeight: '1.8' }}>
                                 These terms ensure a transparent and professional relationship between {siteConfig.name} and our valued clients. Please review them carefully before starting your project.
                             </p>
                         </motion.div>
@@ -111,10 +111,10 @@ const TermsCondition = () => {
                                     viewport={{ once: true }}
                                     transition={{ delay: index * 0.1 }}
                                     style={{
-                                        background: '#111',
+                                        background: 'var(--color-card-bg)',
                                         padding: '40px',
                                         borderRadius: '20px',
-                                        border: '1px solid #222',
+                                        border: '1px solid var(--color-border)',
                                         transition: 'all 0.3s ease'
                                     }}
                                     className="terms-card"
@@ -129,8 +129,8 @@ const TermsCondition = () => {
                                     }}>
                                         {section.icon}
                                     </div>
-                                    <h3 style={{ fontSize: '20px', marginBottom: '15px', color: '#fff' }}>{section.title}</h3>
-                                    <p style={{ color: '#aaa', lineHeight: '1.7', fontSize: '15px' }}>{section.content}</p>
+                                    <h3 style={{ fontSize: '20px', marginBottom: '15px', color: 'var(--color-text)' }}>{section.title}</h3>
+                                    <p style={{ color: 'var(--color-text-muted)', lineHeight: '1.7', fontSize: '15px' }}>{section.content}</p>
                                 </motion.div>
                             ))}
                         </div>
@@ -142,9 +142,9 @@ const TermsCondition = () => {
                             style={{
                                 marginTop: '80px',
                                 padding: '40px',
-                                background: 'linear-gradient(45deg, #111, #050505)',
+                                background: 'var(--color-card-bg)',
                                 borderRadius: '24px',
-                                border: '1px solid #222',
+                                border: '1px solid var(--color-border)',
                                 textAlign: 'center'
                             }}
                         >

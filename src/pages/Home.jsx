@@ -8,17 +8,64 @@ const Home = () => {
     const { hero, serviceCategories, features, testimonials, process, blog, aboutSection, faq } = pages.home;
     const { gallery } = pages;
     const [currentSlide, setCurrentSlide] = useState(0);
+    const [progress, setProgress] = useState(0);
     const [openFaq, setOpenFaq] = useState(0);
 
+    // Optimized Slide Timing Logic
     useEffect(() => {
-        const timer = setInterval(() => {
-            setCurrentSlide((prev) => (prev + 1) % hero.slides.length);
-        }, 5000);
-        return () => clearInterval(timer);
-    }, [hero.slides.length]);
+        const interval = 6000; // 6 seconds per slide
 
-    const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % hero.slides.length);
-    const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + hero.slides.length) % hero.slides.length);
+        // Timer for slide change
+        const slideTimer = setInterval(() => {
+            setCurrentSlide((prev) => (prev + 1) % hero.slides.length);
+            setProgress(0); // Reset progress on slide change
+        }, interval);
+
+        // Timer for progress bar
+        const progressInterval = 50;
+        const progTimer = setInterval(() => {
+            setProgress((prev) => {
+                const next = prev + (100 / (interval / progressInterval));
+                return next >= 100 ? 100 : next;
+            });
+        }, progressInterval);
+
+        return () => {
+            clearInterval(slideTimer);
+            clearInterval(progTimer);
+        };
+    }, [hero.slides.length]); // Only depend on content length, not currentSlide
+
+    // Reset progress when slide is manually changed
+    const handleSlideChange = (index) => {
+        setCurrentSlide(index);
+        setProgress(0);
+    };
+
+    const nextSlide = () => handleSlideChange((currentSlide + 1) % hero.slides.length);
+    const prevSlide = () => handleSlideChange((currentSlide - 1 + hero.slides.length) % hero.slides.length);
+
+    // Character animation variants
+    const titleVariants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.05,
+                delayChildren: 0.2
+            }
+        }
+    };
+
+    const characterVariants = {
+        hidden: { opacity: 0, y: 20, rotateX: -90 },
+        visible: {
+            opacity: 1,
+            y: 0,
+            rotateX: 0,
+            transition: { duration: 0.6, ease: "easeOut" }
+        }
+    };
 
     // Icon mapping for features and process
     const iconMap = {
@@ -33,7 +80,7 @@ const Home = () => {
 
     return (
         <div className="home-page">
-            {/* Hero Slider Section */}
+            {/* Enhanced Hero Slider Section */}
             <section className="hero" style={{
                 height: '75vh',
                 minHeight: '550px',
@@ -41,148 +88,277 @@ const Home = () => {
                 overflow: 'hidden',
                 background: '#000'
             }}>
-                <AnimatePresence mode='wait'>
+                {/* Visual Depth Elements */}
+                <div style={{
+                    position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
+                    background: 'radial-gradient(circle at 20% 50%, rgba(252, 202, 14, 0.05) 0%, transparent 50%)',
+                    zIndex: 1, pointerEvents: 'none'
+                }}></div>
+
+                {/* BACKGROUND IMAGE CROSSFADE - No mode='wait' here */}
+                <AnimatePresence initial={false}>
                     <motion.div
                         key={currentSlide}
-                        initial={{ opacity: 0, scale: 1.1 }}
+                        initial={{ opacity: 0, scale: 1.15 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 2, ease: "easeOut" }}
+                        exit={{ opacity: 0, scale: 0.95 }}
+                        transition={{
+                            opacity: { duration: 1.5, ease: "easeInOut" },
+                            scale: { duration: 8, ease: "linear" } // Ken Burns effect
+                        }}
                         style={{
                             position: 'absolute',
                             top: 0,
                             left: 0,
                             width: '100%',
                             height: '100%',
-                            backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.1) 100%), url(${hero.slides[currentSlide].image})`,
+                            backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.2) 100%), url(${hero.slides[currentSlide].image})`,
                             backgroundSize: 'cover',
                             backgroundPosition: 'center',
                             zIndex: 0
                         }}
-                    />
+                    >
+                        <div className="hero-particles" />
+                    </motion.div>
                 </AnimatePresence>
 
                 <div className="container" style={{
                     position: 'relative',
-                    zIndex: 1,
+                    zIndex: 2,
                     height: '100%',
                     display: 'flex',
                     flexDirection: 'column',
-                    justifyContent: 'center'
+                    flexDirection: 'column',
+                    justifyContent: 'flex-start',
+                    paddingTop: '180px' // Ensure content starts well below the navbar
                 }}>
+                    {/* CONTENT TRANSITION - mode='wait' is fine here for text */}
                     <AnimatePresence mode='wait'>
                         <motion.div
                             key={currentSlide}
-                            initial={{ opacity: 0, y: 30 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -30 }}
-                            transition={{ duration: 0.8, delay: 0.3 }}
-                            style={{ maxWidth: '800px' }}
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            exit={{ opacity: 0, x: -20 }}
+                            transition={{ duration: 0.5 }}
+                            style={{ maxWidth: '900px' }}
                         >
-                            <motion.span
-                                initial={{ opacity: 0, x: -20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ delay: 0.5 }}
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.3 }}
                                 style={{
-                                    display: 'inline-block',
-                                    color: 'var(--color-gold)',
-                                    fontWeight: 'bold',
-                                    letterSpacing: '4px',
-                                    textTransform: 'uppercase',
-                                    marginBottom: '15px',
-                                    fontSize: '14px',
-                                    background: 'rgba(252, 202, 14, 0.1)',
-                                    padding: '8px 16px',
-                                    borderRadius: '30px',
-                                    border: '1px solid rgba(252, 202, 14, 0.3)'
-                                }}>
-                                Welcome to Print Graphics
-                            </motion.span>
-                            <h1 style={{
-                                fontSize: 'clamp(40px, 6vw, 80px)',
-                                fontWeight: '800',
-                                lineHeight: '1.1',
-                                color: '#fff',
-                                marginBottom: '25px',
-                                textShadow: '2px 2px 4px rgba(0,0,0,0.5)'
-                            }}>
-                                {hero.slides[currentSlide].title}
-                            </h1>
-                            <p style={{
-                                fontSize: 'clamp(18px, 1.5vw, 22px)',
-                                color: '#e0e0e0',
-                                maxWidth: '600px',
-                                marginBottom: '40px',
-                                fontWeight: '300',
-                                lineHeight: '1.6'
-                            }}>
-                                {hero.slides[currentSlide].subtitle}
-                            </p>
+                                    display: 'inline-flex',
+                                    alignItems: 'center',
+                                    gap: '12px',
+                                    background: 'rgba(255, 255, 255, 0.03)',
+                                    padding: '12px 24px',
+                                    borderRadius: '100px',
+                                    border: '1px solid rgba(252, 202, 14, 0.3)',
+                                    backdropFilter: 'blur(15px)',
+                                    marginBottom: '35px',
+                                    boxShadow: '0 4px 15px rgba(0,0,0,0.2)'
+                                }}
+                            >
+                                <motion.div
+                                    animate={{ scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5] }}
+                                    transition={{ duration: 2, repeat: Infinity }}
+                                    style={{ width: '8px', height: '8px', background: 'var(--color-gold)', borderRadius: '50%', boxShadow: '0 0 15px var(--color-gold)' }}
+                                />
+                                <span
+                                    style={{
+                                        color: '#fff',
+                                        fontWeight: '700',
+                                        letterSpacing: '3px',
+                                        textTransform: 'uppercase',
+                                        fontSize: '12px',
+                                        fontFamily: 'var(--font-primary)',
+                                    }}
+                                >
+                                    Pioneering Precision Printing
+                                </span>
 
-                            <div style={{ display: 'flex', gap: '20px' }}>
+                            </motion.div>
+
+                            <motion.h1
+                                variants={titleVariants}
+                                initial="hidden"
+                                animate="visible"
+                                style={{
+                                    fontSize: 'clamp(32px, 5vw, 70px)',
+                                    fontWeight: '900',
+                                    lineHeight: '0.95',
+                                    color: '#fff',
+                                    marginBottom: '35px',
+                                    textTransform: 'uppercase',
+                                    perspective: '1000px',
+                                    letterSpacing: '-2px', // Tight spacing for heavy impact
+                                    fontFamily: 'var(--font-display)' // Outfit as base
+                                }}
+                            >
+                                {hero.slides[currentSlide].title.split(' ').map((word, wordIndex, words) => {
+                                    const isLast = wordIndex === words.length - 1;
+                                    return (
+                                        <span key={wordIndex} style={{ display: 'inline-block', whiteSpace: 'nowrap', marginRight: '0.3em' }}>
+                                            {word.split('').map((char, charIndex) => (
+                                                <motion.span
+                                                    key={charIndex}
+                                                    variants={characterVariants}
+                                                    style={{
+                                                        display: 'inline-block',
+                                                        color: isLast ? 'var(--color-gold)' : '#fff',
+                                                        fontFamily: isLast ? 'var(--font-header)' : 'inherit', // Syne for the highlight
+                                                        letterSpacing: isLast ? '2px' : 'inherit', // Wide spacing for the gold word
+                                                        textShadow: isLast ? '0 0 30px rgba(252, 202, 14, 0.4)' : 'none'
+                                                    }}
+                                                >
+                                                    {char}
+                                                </motion.span>
+                                            ))}
+                                        </span>
+                                    );
+                                })}
+                            </motion.h1>
+
+                            <motion.div
+                                initial={{ width: 0 }}
+                                animate={{ width: '100px' }}
+                                transition={{ delay: 1, duration: 1 }}
+                                style={{ height: '4px', background: 'var(--color-gold)', marginBottom: '35px', borderRadius: '2px' }}
+                            />
+
+                            <motion.p
+                                initial={{ opacity: 0, x: -30 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: 1.2, duration: 0.8 }}
+                                style={{
+                                    fontSize: 'clamp(18px, 1.8vw, 22px)',
+                                    color: 'rgba(255,255,255,0.7)',
+                                    maxWidth: '600px',
+                                    marginBottom: '50px',
+                                    lineHeight: '1.4',
+                                    fontWeight: '400',
+                                    letterSpacing: '0.5px',
+                                    fontFamily: 'var(--font-primary)' // Poppins for readability
+                                }}
+                            >
+                                {hero.slides[currentSlide].subtitle}
+                            </motion.p>
+
+                            <motion.div
+                                initial={{ opacity: 0, y: 30 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 1.5 }}
+                                style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}
+                            >
                                 <Link to="/contact" className="btn-primary" style={{
-                                    padding: '16px 40px',
+                                    padding: '24px 60px',
                                     fontSize: '18px',
-                                    borderRadius: '50px',
+                                    borderRadius: '100px',
+                                    fontWeight: '800',
+                                    boxShadow: '0 15px 45px rgba(252, 202, 14, 0.25)',
                                     display: 'flex',
                                     alignItems: 'center',
-                                    gap: '10px'
+                                    gap: '15px',
+                                    position: 'relative',
+                                    overflow: 'hidden',
+                                    fontFamily: 'var(--font-display)' // Outfit for buttons
                                 }}>
-                                    Start Project <ArrowRight size={20} />
-                                </Link>
-                                <Link to="/services" className="btn-outline" style={{
-                                    padding: '16px 40px',
-                                    fontSize: '18px',
-                                    borderRadius: '50px',
-                                    border: '1px solid rgba(255,255,255,0.3)',
-                                    color: '#fff',
-                                    background: 'rgba(255,255,255,0.05)',
-                                    backdropFilter: 'blur(10px)',
-                                    transition: 'all 0.3s'
-                                }}>
-                                    View Services
-                                </Link>
-                            </div>
-
-                            {/* Progress Indicators - Moved Here */}
-                            <div style={{ display: 'flex', gap: '10px', marginTop: '40px' }}>
-                                {hero.slides.map((_, index) => (
-                                    <div
-                                        key={index}
-                                        onClick={() => setCurrentSlide(index)}
+                                    Start Your Legacy <ArrowRight size={22} />
+                                    {/* Shine Effect */}
+                                    <motion.div
+                                        animate={{ left: ['-100%', '200%'] }}
+                                        transition={{ duration: 3, repeat: Infinity, repeatDelay: 2 }}
                                         style={{
-                                            height: '4px',
-                                            width: currentSlide === index ? '40px' : '20px',
-                                            background: currentSlide === index ? 'var(--color-gold)' : 'rgba(255,255,255,0.3)',
-                                            borderRadius: '4px',
-                                            transition: 'all 0.3s',
-                                            cursor: 'pointer'
+                                            position: 'absolute', top: 0, width: '50%', height: '100%',
+                                            background: 'linear-gradient(to right, transparent, rgba(255,255,255,0.3), transparent)',
+                                            transform: 'skewX(-25deg)', pointerEvents: 'none'
                                         }}
                                     />
-                                ))}
-                            </div>
+                                </Link>
+                                <Link to="/services" className="btn-outline" style={{
+                                    padding: '24px 60px',
+                                    fontSize: '18px',
+                                    borderRadius: '100px',
+                                    border: '1px solid rgba(255,255,255,0.15)',
+                                    color: '#fff',
+                                    background: 'rgba(255,255,255,0.03)',
+                                    backdropFilter: 'blur(20px)',
+                                    fontWeight: '600',
+                                    transition: 'all 0.3s',
+                                    fontFamily: 'var(--font-display)' // Outfit for buttons
+                                }}>
+                                    Explore Works
+                                </Link>
+                            </motion.div>
                         </motion.div>
                     </AnimatePresence>
-                </div>
 
-                {/* Slider Progress & Controls */}
-                <div style={{
-                    position: 'absolute',
-                    bottom: '50px',
-                    left: '5vw',
-                    right: '5vw',
-                    display: 'flex',
-                    justifyContent: 'flex-end',
-                    alignItems: 'end',
-                    zIndex: 2
-                }}>
-
+                    {/* Modern Slider Nav - Vertical Sidebar */}
+                    <div className="desktop-only" style={{
+                        position: 'absolute', bottom: '60px', right: '0',
+                        display: 'flex', flexDirection: 'column', gap: '15px',
+                        paddingRight: 'min(50px, 5%)',
+                        zIndex: 2
+                    }}>
+                        {hero.slides.map((_, index) => (
+                            <div key={index}
+                                onClick={() => setCurrentSlide(index)}
+                                style={{
+                                    cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '15px'
+                                }}
+                            >
+                                <span style={{
+                                    color: currentSlide === index ? 'var(--color-gold)' : 'rgba(255,255,255,0.3)',
+                                    fontSize: '14px', fontWeight: 'bold'
+                                }}>
+                                    0{index + 1}
+                                </span>
+                                <div style={{
+                                    width: '60px', height: '4px', background: 'rgba(255,255,255,0.1)',
+                                    borderRadius: '2px', position: 'relative', overflow: 'hidden'
+                                }}>
+                                    {currentSlide === index && (
+                                        <motion.div
+                                            initial={{ left: '-100%' }}
+                                            animate={{ left: `${progress - 100}%` }}
+                                            style={{
+                                                position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
+                                                background: 'var(--color-gold)', boxShadow: '0 0 10px var(--color-gold)'
+                                            }}
+                                        />
+                                    )}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
 
                     {/* Navigation Arrows */}
-                    <div style={{ display: 'flex', gap: '15px' }}>
+                    <div style={{
+                        position: 'absolute',
+                        bottom: '50px',
+                        right: '50px',
+                        display: 'none', // Hide default arrows as we have the nav bar
+                        gap: '15px',
+                        zIndex: 2
+                    }}>
                         <button onClick={prevSlide} className="slider-btn"><ArrowLeft size={20} /></button>
                         <button onClick={nextSlide} className="slider-btn"><ArrowRight size={20} /></button>
                     </div>
+
+                    {/* Scroll Indicator - Back to Center */}
+                    <motion.div
+                        className="desktop-only"
+                        animate={{ y: [0, 15, 0] }}
+                        transition={{ duration: 2, repeat: Infinity }}
+                        style={{
+                            position: 'absolute', bottom: '40px', left: '50%', transform: 'translateX(-50%)',
+                            display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', opacity: 0.5,
+                            zIndex: 2
+                        }}
+                    >
+                        <span style={{ color: '#fff', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '4px' }}>Scroll</span>
+                        <div style={{ width: '1.5px', height: '40px', background: 'linear-gradient(to bottom, var(--color-gold), transparent)' }} />
+                    </motion.div>
                 </div>
 
                 <style>{`
@@ -210,7 +386,7 @@ const Home = () => {
             </section>
 
             {/* NEW: Stats Section */}
-            <section style={{ padding: '40px 0', background: '#111', borderBottom: '1px solid #222' }}>
+            <section style={{ padding: '40px 0', background: 'var(--color-card-bg)', borderBottom: '1px solid var(--color-border)' }}>
                 <div className="container">
                     <div style={{
                         display: 'grid',
@@ -221,12 +397,12 @@ const Home = () => {
                         {aboutSection.stats.map((stat, index) => (
                             <div key={index} style={{
                                 padding: '20px',
-                                borderRight: index !== aboutSection.stats.length - 1 ? '1px solid #333' : 'none'
+                                borderRight: index !== aboutSection.stats.length - 1 ? '1px solid var(--color-border)' : 'none'
                             }}>
                                 <h3 style={{ fontSize: '48px', fontWeight: 'bold', color: 'var(--color-gold)', lineHeight: '1' }}>
                                     {stat.value}
                                 </h3>
-                                <p style={{ color: '#fff', fontSize: '14px', textTransform: 'uppercase', marginTop: '10px', letterSpacing: '1px' }}>
+                                <p style={{ color: 'var(--color-text)', fontSize: '14px', textTransform: 'uppercase', marginTop: '10px', letterSpacing: '1px' }}>
                                     {stat.label}
                                 </p>
                             </div>
@@ -234,9 +410,7 @@ const Home = () => {
                     </div>
                 </div>
             </section>
-
-            {/* NEW: About Section */}
-            <section style={{ padding: '100px 0', background: '#0a0a0a' }}>
+            <section style={{ padding: '100px 0', background: 'var(--color-bg)' }}>
                 <div className="container">
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '60px', alignItems: 'center' }}>
                         {/* Image Side */}
@@ -265,14 +439,14 @@ const Home = () => {
                                 position: 'absolute',
                                 bottom: '-30px',
                                 right: '-30px',
-                                background: '#1a1a1a',
+                                background: 'var(--color-card-bg)',
                                 padding: '30px',
                                 borderRadius: '16px',
-                                border: '1px solid #333',
+                                border: '1px solid var(--color-border)',
                                 maxWidth: '200px'
                             }}>
                                 <p style={{ color: 'var(--color-gold)', fontWeight: 'bold', fontSize: '18px', marginBottom: '5px' }}>Top Rated</p>
-                                <p style={{ color: '#ccc', fontSize: '14px' }}>Consistently delivered excellence in printing since 2018.</p>
+                                <p style={{ color: 'var(--color-text-muted)', fontSize: '14px' }}>Consistently delivered excellence in printing since 2018.</p>
                             </div>
                         </motion.div>
 
@@ -284,24 +458,24 @@ const Home = () => {
                             transition={{ duration: 0.8 }}
                         >
                             <span style={{ color: 'var(--color-gold)', textTransform: 'uppercase', letterSpacing: '3px', fontSize: '14px', fontWeight: 'bold' }}>About Us</span>
-                            <h2 style={{ fontSize: '42px', fontWeight: 'bold', color: '#fff', marginTop: '15px', marginBottom: '25px', lineHeight: '1.2' }}>
+                            <h2 style={{ fontSize: '42px', fontWeight: 'bold', color: 'var(--color-text)', marginTop: '15px', marginBottom: '25px', lineHeight: '1.2' }}>
                                 {aboutSection.title}
                             </h2>
-                            <p style={{ color: '#ccc', fontSize: '18px', lineHeight: '1.6', marginBottom: '30px' }}>
+                            <p style={{ color: 'var(--color-text-muted)', fontSize: '18px', lineHeight: '1.6', marginBottom: '30px' }}>
                                 {aboutSection.description}
                             </p>
 
                             <ul style={{ listStyle: 'none', padding: 0, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '40px' }}>
-                                <li style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#eee' }}>
+                                <li style={{ display: 'flex', alignItems: 'center', gap: '10px', color: 'var(--color-text)' }}>
                                     <CheckCircle size={20} color="var(--color-gold)" /> Creative Design
                                 </li>
-                                <li style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#eee' }}>
+                                <li style={{ display: 'flex', alignItems: 'center', gap: '10px', color: 'var(--color-text)' }}>
                                     <CheckCircle size={20} color="var(--color-gold)" /> High Quality Print
                                 </li>
-                                <li style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#eee' }}>
+                                <li style={{ display: 'flex', alignItems: 'center', gap: '10px', color: 'var(--color-text)' }}>
                                     <CheckCircle size={20} color="var(--color-gold)" /> 24/7 Support
                                 </li>
-                                <li style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#eee' }}>
+                                <li style={{ display: 'flex', alignItems: 'center', gap: '10px', color: 'var(--color-text)' }}>
                                     <CheckCircle size={20} color="var(--color-gold)" /> Fast Delivery
                                 </li>
                             </ul>
@@ -315,7 +489,7 @@ const Home = () => {
             </section>
 
             {/* Features Section (Why Choose Us) - Increased Spacing */}
-            <section style={{ padding: '60px 0', background: '#0a0a0a' }}>
+            <section style={{ padding: '60px 0', background: 'var(--color-bg)' }}>
                 <div className="container">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
@@ -324,8 +498,8 @@ const Home = () => {
                         style={{ textAlign: 'center', marginBottom: '40px' }}
                     >
                         <span style={{ color: 'var(--color-gold)', textTransform: 'uppercase', letterSpacing: '3px', fontSize: '14px', fontWeight: 'bold' }}>Our Excellence</span>
-                        <h2 style={{ fontSize: '42px', fontWeight: 'bold', color: '#fff', marginTop: '10px' }}>{features.title}</h2>
-                        <p style={{ color: '#888', fontSize: '18px', marginTop: '15px' }}>{features.subtitle}</p>
+                        <h2 style={{ fontSize: '42px', fontWeight: 'bold', color: 'var(--color-text)', marginTop: '10px' }}>{features.title}</h2>
+                        <p style={{ color: 'var(--color-text-muted)', fontSize: '18px', marginTop: '15px' }}>{features.subtitle}</p>
                     </motion.div>
 
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '30px' }}>
@@ -341,8 +515,8 @@ const Home = () => {
                                     <div className="icon-wrapper">
                                         {iconMap[feature.icon]}
                                     </div>
-                                    <h3 style={{ fontSize: '18px', fontWeight: 'bold', color: '#fff', marginBottom: '10px' }}>{feature.title}</h3>
-                                    <p style={{ color: '#999', lineHeight: '1.6', fontSize: '15px' }}>{feature.description}</p>
+                                    <h3 style={{ fontSize: '18px', fontWeight: 'bold', color: 'var(--color-text)', marginBottom: '10px' }}>{feature.title}</h3>
+                                    <p style={{ color: 'var(--color-text-muted)', lineHeight: '1.6', fontSize: '15px' }}>{feature.description}</p>
                                 </motion.div>
                             </div>
                         ))}
@@ -350,10 +524,10 @@ const Home = () => {
 
                     <style>{`
                         .feature-card {
-                            background: linear-gradient(145deg, #151515 0%, #0a0a0a 100%);
+                            background: var(--color-card-bg);
                             padding: 25px 15px;
                             border-radius: 16px;
-                            border: 1px solid #222;
+                            border: 1px solid var(--color-border);
                             text-align: center;
                             display: flex;
                             flex-direction: column;
@@ -415,12 +589,12 @@ const Home = () => {
                 </div>
             </section>
 
-            <section style={{ padding: '60px 0', background: '#0a0a0a' }}>
+            <section style={{ padding: '60px 0', background: 'var(--color-bg)' }}>
                 <div className="container">
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'end', marginBottom: '40px' }}>
+                    <div className="section-header-flex" style={{ marginBottom: '40px' }}>
                         <div>
                             <span style={{ color: 'var(--color-gold)', textTransform: 'uppercase', letterSpacing: '3px', fontSize: '14px', fontWeight: 'bold' }}>What We Do</span>
-                            <h2 style={{ fontSize: '42px', fontWeight: 'bold', color: '#fff', marginTop: '10px' }}>Our Expertise</h2>
+                            <h2 style={{ fontSize: '42px', fontWeight: 'bold', color: 'var(--color-text)', marginTop: '10px' }}>Our Expertise</h2>
                         </div>
                         <Link to="/services" className="btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                             View All Services <ArrowRight size={18} />
@@ -429,7 +603,7 @@ const Home = () => {
 
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px' }}>
                         {serviceCategories.slice(0, 3).map((category, index) => (
-                            <Link to="/services" key={category.id} style={{ position: 'relative', overflow: 'hidden', borderRadius: '16px', height: '400px', cursor: 'pointer', display: 'block' }} className="home-service-card">
+                            <Link to={`/services`} key={category.id} style={{ position: 'relative', overflow: 'hidden', borderRadius: '16px', height: '400px', cursor: 'pointer', display: 'block' }} className="home-service-card">
                                 {/* Only showing first item image of category as cover for simplicity in home preview */}
                                 <div style={{
                                     position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
@@ -444,7 +618,7 @@ const Home = () => {
                                 }}></div>
                                 <div style={{ position: 'absolute', bottom: '30px', left: '30px', right: '30px' }}>
                                     <h3 style={{ fontSize: '24px', fontWeight: 'bold', color: '#fff', marginBottom: '10px' }}>{category.title}</h3>
-                                    <p style={{ color: '#ccc', fontSize: '14px', marginBottom: '20px' }}>{category.description}</p>
+                                    <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: '14px', marginBottom: '20px' }}>{category.description}</p>
                                     <span style={{ color: 'var(--color-gold)', textTransform: 'uppercase', fontSize: '12px', fontWeight: 'bold', letterSpacing: '2px' }}>Explore Category</span>
                                 </div>
                                 <style>{`
@@ -458,10 +632,10 @@ const Home = () => {
 
             {/* NEW: Our Process Section */}
             {process && (
-                <section style={{ padding: '60px 0', background: '#000', position: 'relative' }}>
+                <section style={{ padding: '60px 0', background: 'var(--color-bg)', borderTop: '1px solid var(--color-border)', position: 'relative', overflow: 'hidden' }}>
                     <div style={{
                         position: 'absolute', top: 0, bottom: 0, left: 0, right: 0,
-                        background: 'radial-gradient(circle at center, #111 0%, #000 70%)'
+                        background: 'radial-gradient(circle at center, var(--color-card-bg) 0%, var(--color-bg) 70%)'
                     }}></div>
                     <div className="container" style={{ position: 'relative', zIndex: 1 }}>
                         <motion.div
@@ -471,8 +645,8 @@ const Home = () => {
                             style={{ textAlign: 'center', marginBottom: '40px' }}
                         >
                             <span style={{ color: 'var(--color-gold)', textTransform: 'uppercase', letterSpacing: '3px', fontSize: '14px', fontWeight: 'bold' }}>Workflow</span>
-                            <h2 style={{ fontSize: '42px', fontWeight: 'bold', color: '#fff', marginTop: '10px' }}>{process.title}</h2>
-                            <p style={{ color: '#888', fontSize: '18px', marginTop: '15px' }}>{process.subtitle}</p>
+                            <h2 style={{ fontSize: '42px', fontWeight: 'bold', color: 'var(--color-text)', marginTop: '10px' }}>{process.title}</h2>
+                            <p style={{ color: 'var(--color-text-muted)', fontSize: '18px', marginTop: '15px' }}>{process.subtitle}</p>
                         </motion.div>
 
                         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '30px', position: 'relative' }}>
@@ -584,16 +758,16 @@ const Home = () => {
             </section>
 
             {/* NEW: Latest Insights (Blog) */}
-            <section style={{ padding: '80px 0', background: '#0a0a0a', position: 'relative' }}>
+            <section style={{ padding: '80px 0', background: 'var(--color-bg)', position: 'relative' }}>
                 <div style={{
                     position: 'absolute', top: 0, left: 0, right: 0, height: '1px',
-                    background: 'linear-gradient(90deg, transparent, #222, transparent)'
+                    background: 'linear-gradient(90deg, transparent, var(--color-border), transparent)'
                 }}></div>
                 <div className="container">
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'end', marginBottom: '50px' }}>
                         <div>
                             <span style={{ color: 'var(--color-gold)', textTransform: 'uppercase', letterSpacing: '3px', fontSize: '14px', fontWeight: 'bold' }}>Insights</span>
-                            <h2 style={{ fontSize: '42px', fontWeight: 'bold', color: '#fff', marginTop: '10px' }}>Latest News</h2>
+                            <h2 style={{ fontSize: '42px', fontWeight: 'bold', color: 'var(--color-text)', marginTop: '10px' }}>Latest News</h2>
                         </div>
                         <Link to="/blog" className="btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                             Read Blog <ArrowRight size={18} />
@@ -609,13 +783,13 @@ const Home = () => {
                         {pages.blog.posts && pages.blog.posts.slice(0, 2).map((post) => (
                             <Link to="/blog" key={post.id} className="blog-card" style={{ display: 'block', textDecoration: 'none' }}>
                                 <div style={{
-                                    background: '#111',
+                                    background: 'var(--color-card-bg)',
                                     borderRadius: '20px',
                                     padding: '30px',
                                     position: 'relative',
                                     overflow: 'hidden',
                                     height: '100%',
-                                    border: '1px solid #fcca0e',
+                                    border: '1px solid var(--color-border)',
                                     transition: 'all 0.3s ease'
                                 }}>
                                     <div className="blog-hover-bg" style={{
@@ -627,13 +801,13 @@ const Home = () => {
 
                                     <div style={{ position: 'relative', zIndex: 1 }}>
                                         <span style={{
-                                            background: '#222', color: '#ccc', fontSize: '12px', padding: '6px 12px',
+                                            background: 'var(--color-bg)', color: 'var(--color-text-muted)', fontSize: '12px', padding: '6px 12px',
                                             borderRadius: '20px', display: 'inline-block', marginBottom: '20px'
                                         }}>
                                             {post.date}
                                         </span>
-                                        <h3 style={{ color: '#fff', fontSize: '24px', fontWeight: 'bold', marginBottom: '15px', lineHeight: '1.3' }}>{post.title}</h3>
-                                        <p style={{ color: '#888', lineHeight: '1.6', marginBottom: '25px' }}>{post.excerpt}</p>
+                                        <h3 style={{ color: 'var(--color-text)', fontSize: '24px', fontWeight: 'bold', marginBottom: '15px', lineHeight: '1.3' }}>{post.title}</h3>
+                                        <p style={{ color: 'var(--color-text-muted)', lineHeight: '1.6', marginBottom: '25px' }}>{post.excerpt}</p>
                                         <span style={{
                                             color: 'var(--color-gold)', fontSize: '14px', fontWeight: 'bold',
                                             display: 'inline-flex', alignItems: 'center', gap: '5px'
@@ -658,7 +832,7 @@ const Home = () => {
                 </div>
             </section>
 
-            <section style={{ padding: '100px 0', background: '#050505', position: 'relative', overflow: 'hidden' }}>
+            <section style={{ padding: '100px 0', background: 'var(--color-bg)', position: 'relative', overflow: 'hidden' }}>
                 <div style={{
                     position: 'absolute', top: '-10%', right: '-10%', width: '600px', height: '600px',
                     background: 'radial-gradient(circle, rgba(252, 202, 14, 0.03) 0%, transparent 70%)',
@@ -673,7 +847,7 @@ const Home = () => {
                 <div className="container" style={{ position: 'relative', zIndex: 1 }}>
                     <div style={{ textAlign: 'center', marginBottom: '60px' }}>
                         <span style={{ color: 'var(--color-gold)', textTransform: 'uppercase', letterSpacing: '3px', fontSize: '14px', fontWeight: 'bold' }}>Client Feedback</span>
-                        <h2 style={{ fontSize: '42px', fontWeight: 'bold', color: '#fff', marginTop: '10px' }}>What They Say</h2>
+                        <h2 style={{ fontSize: '42px', fontWeight: 'bold', color: 'var(--color-text)', marginTop: '10px' }}>What They Say</h2>
                     </div>
 
                     <div style={{
@@ -690,17 +864,17 @@ const Home = () => {
                                 viewport={{ once: true }}
                                 transition={{ delay: index * 0.1 }}
                                 style={{
-                                    background: 'linear-gradient(135deg, #111 0%, #080808 100%)',
+                                    background: 'var(--color-card-bg)',
                                     padding: '30px',
                                     borderRadius: '24px',
-                                    border: '1px solid #fcca0e',
+                                    border: '1px solid var(--color-border)',
                                     position: 'relative'
                                 }}
                             >
                                 <div style={{ position: 'absolute', top: '30px', right: '30px', opacity: 0.1 }}>
                                     <Quote size={60} color="var(--color-gold)" fill="var(--color-gold)" />
                                 </div>
-                                <p style={{ fontSize: '16px', color: '#ddd', lineHeight: '1.7', marginBottom: '30px', fontStyle: 'italic', position: 'relative', zIndex: 1 }}>
+                                <p style={{ fontSize: '16px', color: 'var(--color-text-muted)', lineHeight: '1.7', marginBottom: '30px', fontStyle: 'italic', position: 'relative', zIndex: 1 }}>
                                     "{testimonial.text}"
                                 </p>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
@@ -817,20 +991,16 @@ const Home = () => {
                         viewport={{ once: true }}
                     >
                         <p style={{ color: '#fff', letterSpacing: '8px', textTransform: 'uppercase', marginBottom: '30px', fontSize: '14px', opacity: 0.7 }}>Ready to Start?</p>
-                        <div style={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
+                        <div className="iconic-cta-wrap" style={{
                             gap: 'clamp(10px, 2vw, 25px)',
                             marginBottom: '60px',
                             textTransform: 'uppercase',
                             lineHeight: 1,
-                            whiteSpace: 'nowrap',
                             width: '100%',
                             overflow: 'visible'
                         }}>
                             <h2 style={{
-                                fontSize: 'clamp(24px, 5.5vw, 80px)',
+                                fontSize: 'clamp(32px, 8vw, 80px)',
                                 fontWeight: '900',
                                 color: '#fff',
                                 margin: 0,
@@ -839,7 +1009,7 @@ const Home = () => {
                                 Let's Build
                             </h2>
                             <h2 style={{
-                                fontSize: 'clamp(24px, 5.5vw, 80px)',
+                                fontSize: 'clamp(32px, 8vw, 80px)',
                                 fontWeight: '900',
                                 color: 'transparent',
                                 WebkitTextStroke: '2px rgba(255,255,255,0.4)',
@@ -849,7 +1019,7 @@ const Home = () => {
                                 Something
                             </h2>
                             <h2 style={{
-                                fontSize: 'clamp(24px, 5.5vw, 80px)',
+                                fontSize: 'clamp(32px, 8vw, 80px)',
                                 fontWeight: '900',
                                 color: 'var(--color-gold)',
                                 margin: 0,

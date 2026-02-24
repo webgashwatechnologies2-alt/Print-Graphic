@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { pages } from '../data/content';
 import { Briefcase, MapPin, Clock, ArrowRight } from 'lucide-react';
@@ -17,7 +18,7 @@ const Career = () => {
                 alignItems: 'center',
                 justifyContent: 'center',
                 overflow: 'hidden',
-                background: '#000'
+                background: 'var(--color-bg)'
             }}>
                 <div style={{
                     position: 'absolute',
@@ -39,7 +40,7 @@ const Career = () => {
                         style={{
                             fontSize: 'clamp(32px, 5vw, 60px)',
                             fontWeight: '900',
-                            color: '#fff',
+                            color: 'var(--color-text)',
                             textTransform: 'uppercase',
                             marginBottom: '20px'
                         }}
@@ -52,7 +53,7 @@ const Career = () => {
                         transition={{ delay: 0.3, duration: 0.8 }}
                         style={{
                             fontSize: '18px',
-                            color: '#ccc',
+                            color: 'var(--color-text-muted)',
                             maxWidth: '600px',
                             margin: '0 auto',
                             fontWeight: '300'
@@ -64,7 +65,7 @@ const Career = () => {
             </section>
 
             {/* Job Listings */}
-            <section style={{ padding: '100px 0', background: '#0a0a0a' }}>
+            <section style={{ padding: '100px 0', background: 'var(--color-bg)' }}>
                 <div className="container" style={{ maxWidth: '1000px' }}>
                     <div style={{ display: 'grid', gap: '30px' }}>
                         {openings.map((job, index) => (
@@ -75,9 +76,9 @@ const Career = () => {
                                 viewport={{ once: true }}
                                 transition={{ delay: index * 0.1, duration: 0.5 }}
                                 style={{
-                                    background: '#111',
+                                    background: 'var(--color-card-bg)',
                                     borderRadius: '16px',
-                                    border: '1px solid #222',
+                                    border: '1px solid var(--color-border)',
                                     padding: '40px',
                                     display: 'flex',
                                     justifyContent: 'space-between',
@@ -89,7 +90,7 @@ const Career = () => {
                                 className="job-card"
                             >
                                 <div style={{ flex: 1, minWidth: '300px' }}>
-                                    <h2 style={{ fontSize: '26px', fontWeight: 'bold', color: '#fff', marginBottom: '15px' }}>
+                                    <h2 style={{ fontSize: '26px', fontWeight: 'bold', color: 'var(--color-text)', marginBottom: '15px' }}>
                                         {job.role}
                                     </h2>
                                     <div style={{ display: 'flex', gap: '25px', flexWrap: 'wrap', color: '#888' }}>
@@ -107,7 +108,7 @@ const Career = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <button className="btn-primary" style={{
+                                <Link to="/contact" className="btn-primary" style={{
                                     padding: '12px 30px',
                                     borderRadius: '50px',
                                     fontSize: '16px',
@@ -116,7 +117,7 @@ const Career = () => {
                                     gap: '10px'
                                 }}>
                                     Apply Now <ArrowRight size={18} />
-                                </button>
+                                </Link>
 
                                 <style>{`
                                     .job-card:hover { border-color: var(--color-gold); }

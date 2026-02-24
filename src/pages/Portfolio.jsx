@@ -23,12 +23,9 @@ const Portfolio = () => {
 
     return (
         <div className="portfolio-page" style={{
-            background: `linear-gradient(rgba(0,0,0,0.9), rgba(0,0,0,0.9)), url(${heroBg})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundAttachment: 'fixed',
+            background: 'var(--color-bg)',
             minHeight: '100vh',
-            color: '#fff'
+            color: 'var(--color-text)'
         }}>
             {/* Hero Section */}
             <section style={{
@@ -42,7 +39,7 @@ const Portfolio = () => {
             }}>
                 <div style={{
                     position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
-                    backgroundImage: `linear-gradient(rgba(0,0,0,0.3), #000 100%), url(${heroBg})`,
+                    backgroundImage: `linear-gradient(rgba(0,0,0,0.3), var(--color-bg) 100%), url(${heroBg})`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     zIndex: 0
@@ -90,9 +87,9 @@ const Portfolio = () => {
                                     padding: '12px 25px',
                                     borderRadius: '50px',
                                     border: '1px solid',
-                                    borderColor: activeFilter === cat ? 'var(--color-gold)' : '#222',
-                                    background: activeFilter === cat ? 'var(--color-gold)' : 'transparent',
-                                    color: activeFilter === cat ? '#000' : '#fff',
+                                    borderColor: activeFilter === cat ? 'var(--color-gold)' : 'var(--color-border)',
+                                    background: activeFilter === cat ? 'var(--color-gold)' : 'var(--color-card-bg)',
+                                    color: activeFilter === cat ? '#000' : 'var(--color-text)',
                                     cursor: 'pointer',
                                     fontSize: '14px',
                                     fontWeight: '600',
@@ -130,7 +127,7 @@ const Portfolio = () => {
                                         position: 'relative',
                                         borderRadius: '20px',
                                         overflow: 'hidden',
-                                        background: '#111',
+                                        background: 'var(--color-card-bg)',
                                         cursor: 'pointer'
                                     }}
                                 >
@@ -160,7 +157,7 @@ const Portfolio = () => {
                                             transition: 'transform 0.4s ease'
                                         }} className="card-overlay">
                                             <span style={{ color: 'var(--color-gold)', fontSize: '12px', fontWeight: 'bold', textTransform: 'uppercase' }}>{img.category}</span>
-                                            <h3 style={{ fontSize: '20px', margin: '5px 0 0' }}>{img.title}</h3>
+                                            <h3 style={{ fontSize: '20px', margin: '5px 0 0', color: '#fff' }}>{img.title}</h3>
                                         </div>
                                     </div>
                                 </motion.div>

@@ -8,45 +8,45 @@ import {
   Mail
 } from 'lucide-react';
 
-import image1 from "../assets/heroslider/image2.jpg";
-import image2 from "../assets/heroslider/automated.jpg";
-import image3 from "../assets/heroslider/image3.jpg";
-import image4 from "../assets/heroslider/image4.jpg";
-import aboutimage from "../assets/glow.jpg";
-import imageacrlicboard from "../assets/servicesimages/acp-acrylic-led-board.jpg";
-import imagesignegs from "../assets/servicesimages/sign-boards.jpg";
-import imageledboard from "../assets/servicesimages/led-sign-board.jpg";
-import imageglowsign from "../assets/servicesimages/glow-sign.jpg";
-import imageneon from "../assets/servicesimages/neon-sign-boards.jpg";
-import imagehording from "../assets/servicesimages/hording.jpg";
-import imageclipboard from "../assets/servicesimages/led-clip-on-board.jpg";
-import imagenamplates from "../assets/servicesimages/nameplates.jpg";
-import imageoneway from "../assets/servicesimages/oneway.jpg";
-import imageflexboard from "../assets/servicesimages/flex-board.jpg";
-import imageflexbanner from "../assets/servicesimages/flex-banner.jpg";
-import imagefabricbanner from "../assets/servicesimages/Fabric-Banner.jpg";
-import imageStandee from "../assets/servicesimages/standee.jpg";
-import imageSunboard from "../assets/servicesimages/sunboard.jpg";
-import imageSunpacks from "../assets/servicesimages/sunpack.jpg";
-import imageVinyl from "../assets/servicesimages/thumb.jpg";
-import imageTranslite from "../assets/servicesimages/printed.jpg";
-import imageCanopy from "../assets/servicesimages/canopy-tent.jpg";
-import imagePamphlets from "../assets/servicesimages/brochure.jpg";
-import imageVisitingCard from "../assets/servicesimages/visitingcards.jpg";
-import imageBillBooks from "../assets/servicesimages/Bill-book.jpg";
-import imageBrochures from "../assets/servicesimages/Brochure-Design.jpg";
-import imageInvitationCard from "../assets/servicesimages/invtcards.jpg";
-import imageMenuCard from "../assets/servicesimages/Menu-Card.jpg";
-import imageIDCard from "../assets/servicesimages/id.jpg";
-import imageLanyard from "../assets/servicesimages/lynyard.jpg";
-import imageCertificate from "../assets/servicesimages/certificate.jpg";
-import imageUVPrint from "../assets/servicesimages/uv.jpg";
-import imageMugPrint from "../assets/servicesimages/Black_Mug.jpg";
-import imageThesis from "../assets/servicesimages/Thesis-Printing-Binding.jpg";
-import imageLamination from "../assets/servicesimages/lam.jpg";
-import imgcorportae from "../assets/servicesimages/corporate.jpg";
-import imageevenetbanner from "../assets/servicesimages/event-banner.jpg";
-import imageBuisnesscard from "../assets/servicesimages/buisness-card.jpg";
+const image1 = "/heroslider/sld1.jpg";
+const image2 = "/heroslider/automated.jpg";
+const image3 = "/heroslider/image3.jpg";
+const image4 = "/heroslider/image4.jpg";
+const aboutimage = "/glow.jpg";
+const imageacrlicboard = "/printimages/Acrylic-3d-board/acbg.jpg";
+const imagesignegs = "/servicesimages/sign-boards.jpg";
+const imageledboard = "/servicesimages/led-sign-board.jpg";
+const imageglowsign = "/servicesimages/glow-sign.jpg";
+const imageneon = "/servicesimages/neonboard.jpeg";
+const imagehording = "/printimages/Hording/hordingbg.jpg";
+const imageclipboard = "/printimages/Clip-on-Board/clpbg.jpg";
+const imagenamplates = "/printimages/Name-Plate/nameplatebg.jpg";
+const imageoneway = "/printimages/One-way-vision/onehero.jpg";
+const imageflexboard = "/printimages/Flex-Banner-Board/flexhero.jpg";
+const imageflexbanner = "/printimages/Flex-Banner-Board/fbhero.jpg";
+const imagefabricbanner = "/servicesimages/fabricherroo.jpeg";
+const imageStandee = "/servicesimages/standee.jpg";
+const imageSunboard = "/servicesimages/sunboard.jpg";
+const imageSunpacks = "/servicesimages/sunpack.jpg";
+const imageVinyl = "/printimages/Vinyl-Sunboard/vnylsuboardhero.jpg";
+const imageTranslite = "/printimages/Translite/translitesecond.jpeg";
+const imageCanopy = "/printimages/Canopy/chero.jpeg";
+const imagePamphlets = "/servicesimages/brochure.jpg";
+const imageVisitingCard = "/printimages/Visiting-card/visitinghero.jpeg";
+const imageBillBooks = "/printimages/Bill-Book/bbsecond.jpeg";
+const imageBrochures = "/servicesimages/Brochure-Design.jpg";
+const imageInvitationCard = "/servicesimages/invt2.jpeg";
+const imageMenuCard = "/printimages/Menu-Card/menuhero.jpg";
+const imageIDCard = "/printimages/id-card-lanyard-and-medal/icardhero.jpg";
+const imageLanyard = "/servicesimages/lynyard.jpeg";
+const imageCertificate = "/servicesimages/certificate.jpg";
+const imageUVPrint = "/printimages/UV-printing/uvhero.jpg";
+const imageMugPrint = "/printimages/Mug-Print-&-Key-Ring/mughero.jpg";
+const imageThesis = "/servicesimages/Thesis-Printing-Binding.jpg";
+const imageLamination = "/servicesimages/lam.jpg";
+const imgcorportae = "/servicesimages/corporate.jpg";
+const imageevenetbanner = "/servicesimages/event-banner.jpg";
+const imageBuisnesscard = "/printimages/Visiting-card/visitinghero.jpeg";
 
 
 export const siteConfig = {
@@ -55,19 +55,54 @@ export const siteConfig = {
   contact: {
     email: "printgraphic2025@gmail.com",
     phone: "+91 98573 56556",
-    address: "Bhattakufer, Near SBI Bank, Shimla (Himachal Pradesh)"
+    address: "Bhattakufar, Near SBI Bank, Shimla (Himachal Pradesh)"
   }
 };
 
 export const navigation = [
   { name: "Home", path: "/", icon: Home },
   { name: "About Us", path: "/about", icon: Info },
-  { name: "Services", path: "/services", icon: Briefcase },
+  { name: "Services", path: "/services", icon: Briefcase, hasDropdown: true },
   { name: "Gallery", path: "/gallery", icon: Image },
   { name: "Blog", path: "/blog", icon: BookOpen },
   { name: "Career", path: "/career", icon: Briefcase },
   { name: "Bookings", path: "/bookings", icon: CalendarDays },
   { name: "Contact Us", path: "/contact", icon: Mail },
+];
+
+export const allServices = [
+  "ACP Acrylic Board",
+  "Signages",
+  "LED Board",
+  "Glow Sign Board",
+  "Neon Board",
+  "Hoarding",
+  "Clip-on Board",
+  "Name Plates",
+  "One Way Vision",
+  "Flex Board",
+  "Flex Banner",
+  "Fabric Banner",
+  "Standee",
+  "Sunboard",
+  "Sunpacks",
+  "Vinyl",
+  "Translite",
+  "Canopy",
+  "Pamphlets",
+  "Visiting Card",
+  "Bill Books",
+  "Brochures",
+  "Invitation Card",
+  "Menu Card",
+  "ID Card",
+  "Lanyard",
+  "Certificate",
+  "UV Print",
+  "Mug Print",
+  "Trophy & Awards",
+  "Thesis Printing & Binding",
+  "Lamination"
 ];
 
 export const footerLinks = [
@@ -105,7 +140,7 @@ export const pages = {
         },
         {
           id: 4,
-          image: image4, 
+          image: image4,
           title: "Large Format Works",
           subtitle: "Dominate the landscape with our outdoor solutions."
         }
@@ -178,6 +213,7 @@ export const pages = {
         items: [
           { name: "UV Print", image: imageUVPrint },
           { name: "Mug Print", image: imageMugPrint },
+          { name: "Trophy & Awards", image: "/printimages/Trophy/trophyhero.jpeg" },
           { name: "Photoframe", image: "https://images.unsplash.com/photo-1534349762230-e0cadf78f5da?auto=format&fit=crop&q=80&w=500" },
           { name: "Digital Printing", image: "https://images.unsplash.com/photo-1563968743333-044cef800494?auto=format&fit=crop&q=80&w=500" },
           { name: "Thesis Printing & Binding", image: imageThesis },

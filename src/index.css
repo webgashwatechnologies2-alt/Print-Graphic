@@ -1,23 +1,119 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Syne:wght@700;800&family=Outfit:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@1,600;1,700&display=swap');
 
 :root {
   --color-bg: #000000;
   --color-gold: #fcca0e;
   --color-white: #ffffff;
+  --color-text: #ffffff;
   --color-text-muted: #cccccc;
+  --color-nav-bg: rgba(0, 0, 0, 0.9);
+  --color-border: #333333;
+  --color-card-bg: #0a0a0a;
+  --color-topbar-text: #000000;
 
   --font-primary: 'Poppins', sans-serif;
+  --font-header: 'Syne', sans-serif;
+  --font-display: 'Outfit', sans-serif;
+  --font-accent: 'Cormorant Garamond', serif;
 }
 
+[data-theme='light'] {
+  --color-bg: #ffffff;
+  --color-text: #000000;
+  --color-text-muted: #444444;
+  --color-nav-bg: rgba(255, 255, 255, 0.9);
+  --color-white: #000000;
+  /* This is tricky, usually we want text to flip */
+  --color-border: #dddddd;
+  --color-card-bg: #f8f8f8;
+}
+
+html,
 body {
   margin: 0;
   padding: 0;
   background-color: var(--color-bg);
-  color: var(--color-white);
+  color: var(--color-text);
   font-family: var(--font-primary);
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background 0.3s ease, color 0.3s ease;
+  overflow-x: hidden;
+}
+
+/* Responsiveness Utilities */
+.section-header-flex {
+  display: flex !important;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.footer-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.iconic-cta-wrap {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+@media (max-width: 768px) {
+  .section-header-flex {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 20px;
+  }
+
+  .footer-col {
+    align-items: center !important;
+    text-align: center !important;
+  }
+
+  .footer-col h4::after {
+    left: 50% !important;
+    transform: translateX(-50%);
+  }
+
+  .footer-col h4 span {
+    left: 50% !important;
+    transform: translateX(-50%);
+  }
+
+  .iconic-cta-wrap {
+    flex-wrap: wrap !important;
+    white-space: normal !important;
+    text-align: center !important;
+    gap: 10px !important;
+  }
+
+  .iconic-cta-wrap h2 {
+    white-space: normal !important;
+    line-height: 1.1 !important;
+    text-align: center !important;
+  }
+
+  .footer-contact-info,
+  .footer-social-wrap {
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .contact-item {
+    justify-content: center !important;
+    text-align: center !important;
+  }
+
+  .footer-bottom-flex {
+    justify-content: center !important;
+    text-align: center !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
 }
 
 a {

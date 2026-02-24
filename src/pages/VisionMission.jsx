@@ -13,7 +13,7 @@ const VisionMission = () => {
     ];
 
     return (
-        <div className="vision-page" style={{ background: '#000', minHeight: '100vh', color: '#fff' }}>
+        <div className="vision-page" style={{ background: 'var(--color-bg)', minHeight: '100vh', color: 'var(--color-text)' }}>
             {/* Hero Section */}
             <section style={{
                 height: '50vh',
@@ -26,7 +26,7 @@ const VisionMission = () => {
             }}>
                 <div style={{
                     position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
-                    backgroundImage: `linear-gradient(rgba(0,0,0,0.3), #000 100%), url(${heroBg})`,
+                    backgroundImage: `linear-gradient(rgba(0,0,0,0.3), var(--color-bg) 100%), url(${heroBg})`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     zIndex: 0
@@ -86,7 +86,7 @@ const VisionMission = () => {
                                     <Rocket size={40} />
                                 </div>
                                 <h2 style={{ fontSize: '32px', marginBottom: '20px', fontWeight: '800' }}>Our <span style={{ color: 'var(--color-gold)' }}>Mission</span></h2>
-                                <p style={{ color: '#ccc', fontSize: '18px', lineHeight: '1.8' }}>
+                                <p style={{ color: 'var(--color-text-muted)', fontSize: '18px', lineHeight: '1.8' }}>
                                     To empower businesses with high-impact visual solutions that dominate the market. We strive to combine cutting-edge technology with artistic expertise to deliver results that make every brand we touch stand out with precision and flair.
                                 </p>
                             </motion.div>
@@ -109,7 +109,7 @@ const VisionMission = () => {
                                     <Target size={40} />
                                 </div>
                                 <h2 style={{ fontSize: '32px', marginBottom: '20px', fontWeight: '800' }}>Our <span style={{ color: 'var(--color-gold)' }}>Vision</span></h2>
-                                <p style={{ color: '#ccc', fontSize: '18px', lineHeight: '1.8' }}>
+                                <p style={{ color: 'var(--color-text-muted)', fontSize: '18px', lineHeight: '1.8' }}>
                                     To be the global benchmark in the printing and signage industry. We envision a future where {siteConfig.name} is synonymous with creative excellence, setting new standards for visual communication through relentless innovation.
                                 </p>
                             </motion.div>
@@ -140,9 +140,9 @@ const VisionMission = () => {
                                         transition={{ delay: index * 0.1 }}
                                         style={{
                                             padding: '35px',
-                                            background: '#0a0a0a',
+                                            background: 'var(--color-card-bg)',
                                             borderRadius: '20px',
-                                            border: '1px solid #1a1a1a',
+                                            border: '1px solid var(--color-border)',
                                             textAlign: 'left'
                                         }}
                                         className="value-card"
@@ -175,9 +175,9 @@ const VisionMission = () => {
                             style={{
                                 marginTop: '100px',
                                 padding: '60px',
-                                background: 'linear-gradient(45deg, #111, #050505)',
+                                background: 'var(--color-card-bg)',
                                 borderRadius: '30px',
-                                border: '1px solid #222',
+                                border: '1px solid var(--color-border)',
                                 textAlign: 'center',
                                 position: 'relative',
                                 overflow: 'hidden'

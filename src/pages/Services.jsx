@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { pages } from '../data/content';
 import { ChevronRight, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import imageservices from "../assets/servicesimages/servicesbnr.jpg";
+const imageservices = "/servicesimages/servicesbnr.jpg";
 
 const Services = () => {
     const { serviceCategories } = pages.home;
@@ -29,7 +29,7 @@ const Services = () => {
                 alignItems: 'center',
                 justifyContent: 'center',
                 overflow: 'hidden',
-                background: '#000'
+                background: 'var(--color-bg)'
             }}>
                 <div style={{
                     position: 'absolute',
@@ -37,9 +37,7 @@ const Services = () => {
                     left: 0,
                     width: '100%',
                     height: '100%',
-                    backgroundImage: `linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.4)), url(${heroBg})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
+                    background: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url(${heroBg}) center/cover no-repeat fixed`,
                     zIndex: 0
                 }}></div>
 
@@ -64,7 +62,7 @@ const Services = () => {
                         transition={{ delay: 0.3, duration: 0.8 }}
                         style={{
                             fontSize: '18px',
-                            color: '#ccc',
+                            color: 'var(--color-text-muted)',
                             maxWidth: '600px',
                             margin: '0 auto',
                             fontWeight: '300'
@@ -76,7 +74,7 @@ const Services = () => {
             </section>
 
             {/* Services List */}
-            <div style={{ padding: '100px 0', background: '#0a0a0a' }}>
+            <div style={{ padding: '100px 0', background: 'var(--color-bg)' }}>
                 <div className="container">
                     {serviceCategories.map((category, index) => (
                         <motion.div
@@ -107,10 +105,10 @@ const Services = () => {
                                     {String(index + 1).padStart(2, '0')}
                                 </span>
                                 <div>
-                                    <h2 style={{ fontSize: 'clamp(28px, 4vw, 36px)', fontWeight: 'bold', color: '#fff', marginBottom: '5px' }}>
+                                    <h2 style={{ fontSize: 'clamp(28px, 4vw, 36px)', fontWeight: 'bold', color: 'var(--color-text)', marginBottom: '5px' }}>
                                         {category.title}
                                     </h2>
-                                    <p style={{ color: '#888', fontSize: '16px', maxWidth: '600px', margin: 0 }}>
+                                    <p style={{ color: 'var(--color-text-muted)', fontSize: '16px', maxWidth: '600px', margin: 0 }}>
                                         {category.description}
                                     </p>
                                 </div>
@@ -122,88 +120,96 @@ const Services = () => {
                                 gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
                                 gap: '30px'
                             }}>
-                                {category.items.map((item) => (
-                                    <motion.div
-                                        key={item.name}
-                                        variants={itemVariants}
-                                        style={{
-                                            position: 'relative',
-                                            height: '350px',
-                                            borderRadius: '16px',
-                                            overflow: 'hidden',
-                                            border: '1px solid #222',
-                                            background: '#000',
-                                            cursor: 'pointer'
-                                        }}
-                                        className="service-card"
-                                    >
-                                        {/* Image */}
-                                        <div style={{
-                                            position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
-                                            backgroundImage: `url(${item.image})`,
-                                            backgroundSize: 'cover',
-                                            backgroundPosition: 'center',
-                                            transition: 'transform 0.7s ease'
-                                        }} className="card-image"></div>
+                                {category.items.map((item) => {
+                                    const serviceSlug = item.name.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-').replace(/[()]/g, '') + '-in-shimla';
+                                    return (
+                                        <Link
+                                            key={item.name}
+                                            to={`/services/${serviceSlug}`}
+                                            style={{ textDecoration: 'none' }}
+                                        >
+                                            <motion.div
+                                                variants={itemVariants}
+                                                style={{
+                                                    position: 'relative',
+                                                    height: '350px',
+                                                    borderRadius: '16px',
+                                                    overflow: 'hidden',
+                                                    border: '1px solid var(--color-border)',
+                                                    background: 'var(--color-card-bg)',
+                                                    cursor: 'pointer'
+                                                }}
+                                                className="service-card"
+                                            >
+                                                {/* Image */}
+                                                <div style={{
+                                                    position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
+                                                    backgroundImage: `url(${item.image})`,
+                                                    backgroundSize: 'cover',
+                                                    backgroundPosition: 'center',
+                                                    transition: 'transform 0.7s ease'
+                                                }} className="card-image"></div>
 
-                                        {/* Overlay */}
-                                        <div style={{
-                                            position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
-                                            background: 'linear-gradient(to top, #000 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.1) 100%)',
-                                            zIndex: 1
-                                        }}></div>
+                                                {/* Overlay */}
+                                                <div style={{
+                                                    position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
+                                                    background: 'linear-gradient(to top, var(--color-bg) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.1) 100%)',
+                                                    zIndex: 1
+                                                }}></div>
 
-                                        {/* Content */}
-                                        <div style={{
-                                            position: 'absolute',
-                                            bottom: 0,
-                                            left: 0,
-                                            right: 0,
-                                            padding: '30px',
-                                            zIndex: 2,
-                                            background: 'linear-gradient(to top, #000 20%, transparent 100%)'
-                                        }}>
-                                            <h3 style={{
-                                                fontSize: '22px',
-                                                fontWeight: 'bold',
-                                                color: '#fff',
-                                                marginBottom: '10px',
-                                                textShadow: '0 2px 4px rgba(0,0,0,0.5)'
-                                            }}>
-                                                {item.name}
-                                            </h3>
+                                                {/* Content */}
+                                                <div style={{
+                                                    position: 'absolute',
+                                                    bottom: 0,
+                                                    left: 0,
+                                                    right: 0,
+                                                    padding: '30px',
+                                                    zIndex: 2,
+                                                    background: 'linear-gradient(to top, #000 20%, transparent 100%)'
+                                                }}>
+                                                    <h3 style={{
+                                                        fontSize: '22px',
+                                                        fontWeight: 'bold',
+                                                        color: '#fff',
+                                                        marginBottom: '10px',
+                                                        textShadow: '0 2px 4px rgba(0,0,0,0.5)'
+                                                    }}>
+                                                        {item.name}
+                                                    </h3>
 
-                                            <div style={{
-                                                height: '2px',
-                                                width: '40px',
-                                                background: 'var(--color-gold)',
-                                                marginBottom: '15px',
-                                                transition: 'width 0.3s ease'
-                                            }} className="card-line"></div>
+                                                    <div style={{
+                                                        height: '2px',
+                                                        width: '40px',
+                                                        background: 'var(--color-gold)',
+                                                        marginBottom: '15px',
+                                                        transition: 'width 0.3s ease'
+                                                    }} className="card-line"></div>
 
-                                            <div style={{
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                gap: '10px',
-                                                color: 'var(--color-gold)',
-                                                fontSize: '14px',
-                                                fontWeight: '600',
-                                                opacity: 0,
-                                                transform: 'translateY(20px)',
-                                                transition: 'all 0.3s ease'
-                                            }} className="card-link">
-                                                View Details <ArrowRight size={16} />
-                                            </div>
-                                        </div>
+                                                    <div style={{
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        gap: '10px',
+                                                        color: 'var(--color-gold)',
+                                                        fontSize: '14px',
+                                                        fontWeight: '600',
+                                                        opacity: 0,
+                                                        transform: 'translateY(20px)',
+                                                        transition: 'all 0.3s ease'
+                                                    }} className="card-link">
+                                                        View Details <ArrowRight size={16} />
+                                                    </div>
+                                                </div>
 
-                                        <style>{`
-                                            .service-card:hover .card-image { transform: scale(1.1); }
-                                            .service-card:hover { border-color: var(--color-gold); }
-                                            .service-card:hover .card-line { width: 80px; }
-                                            .service-card:hover .card-link { opacity: 1; transform: translateY(0); }
-                                        `}</style>
-                                    </motion.div>
-                                ))}
+                                                <style>{`
+                                                .service-card:hover .card-image { transform: scale(1.1); }
+                                                .service-card:hover { border-color: var(--color-gold); }
+                                                .service-card:hover .card-line { width: 80px; }
+                                                .service-card:hover .card-link { opacity: 1; transform: translateY(0); }
+                                            `}</style>
+                                            </motion.div>
+                                        </Link>
+                                    );
+                                })}
                             </div>
                         </motion.div>
                     ))}
@@ -220,7 +226,7 @@ const Services = () => {
                     }}>
                         <div style={{
                             position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
-                            background: '#111',
+                            background: 'var(--color-card-bg)',
                             zIndex: 0
                         }}></div>
 
@@ -237,7 +243,7 @@ const Services = () => {
                                 fontSize: 'clamp(32px, 5vw, 48px)',
                                 fontWeight: '900',
                                 marginBottom: '20px',
-                                color: '#fff',
+                                color: 'var(--color-text)',
                                 textTransform: 'uppercase'
                             }}>
                                 Need something <span style={{ color: 'var(--color-gold)' }}>Custom?</span>
@@ -246,7 +252,7 @@ const Services = () => {
                                 fontSize: '18px',
                                 maxWidth: '600px',
                                 margin: '0 auto 40px',
-                                color: '#aaa',
+                                color: 'var(--color-text-muted)',
                                 lineHeight: '1.6'
                             }}>
                                 We specialize in bespoke printing and design solutions. Tell us what you need, and we'll bring your vision to life.

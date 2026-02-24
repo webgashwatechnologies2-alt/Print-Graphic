@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { pages } from '../data/content';
 
 
-import galleryimage from "../assets/servicesimages/galleryhero.jpg";
+const galleryimage = "/servicesimages/galleryhero.jpg";
 
 const Gallery = () => {
     const { title, images } = pages.gallery;
@@ -19,7 +19,7 @@ const Gallery = () => {
                 alignItems: 'center',
                 justifyContent: 'center',
                 overflow: 'hidden',
-                background: '#000'
+                background: 'var(--color-bg)'
             }}>
                 <div style={{
                     position: 'absolute',
@@ -54,7 +54,7 @@ const Gallery = () => {
                         transition={{ delay: 0.3, duration: 0.8 }}
                         style={{
                             fontSize: '18px',
-                            color: '#ccc',
+                            color: 'var(--color-text-muted)',
                             maxWidth: '600px',
                             margin: '0 auto',
                             fontWeight: '300'
@@ -66,7 +66,7 @@ const Gallery = () => {
             </section>
 
             {/* Gallery Grid */}
-            <section style={{ padding: '100px 0', background: '#0a0a0a' }}>
+            <section style={{ padding: '100px 0', background: 'var(--color-bg)' }}>
                 <div className="container">
                     <div style={{
                         display: 'grid',
@@ -84,11 +84,11 @@ const Gallery = () => {
                                 style={{
                                     position: 'relative',
                                     height: '350px',
-                                    background: '#111',
+                                    background: 'var(--color-card-bg)',
                                     borderRadius: '16px',
                                     overflow: 'hidden',
                                     cursor: 'pointer',
-                                    border: '1px solid #222'
+                                    border: '1px solid var(--color-border)'
                                 }}
                                 className="gallery-item"
                             >
@@ -141,7 +141,7 @@ const Gallery = () => {
                                     <h3 style={{
                                         fontSize: '22px',
                                         fontWeight: 'bold',
-                                        color: '#fff',
+                                        color: 'var(--color-text)',
                                         margin: 0
                                     }}>
                                         {img.title}

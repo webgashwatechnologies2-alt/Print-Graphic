@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { pages } from '../data/content';
 import { Link } from 'react-router-dom';
 import { CheckCircle2 } from 'lucide-react';
-import imageabout from "../assets/servicesimages/abouthero.jpg";
+const imageabout = "/servicesimages/abouthero.jpg";
 
 const About = () => {
     const { title, content, mission, vision } = pages.about;
@@ -20,7 +20,7 @@ const About = () => {
                 alignItems: 'center',
                 justifyContent: 'center',
                 overflow: 'hidden',
-                background: '#000'
+                background: 'var(--color-bg)'
             }}>
                 <div style={{
                     position: 'absolute',
@@ -63,7 +63,7 @@ const About = () => {
             </section>
 
             {/* Main Content Section */}
-            <section style={{ padding: '100px 0', background: '#0a0a0a' }}>
+            <section style={{ padding: '100px 0', background: 'var(--color-bg)' }}>
                 <div className="container">
                     <div style={{
                         display: 'grid',
@@ -94,7 +94,7 @@ const About = () => {
                                 fontWeight: 'bold',
                                 lineHeight: '1.2',
                                 marginBottom: '30px',
-                                color: '#fff'
+                                color: 'var(--color-text)'
                             }}>
                                 Crafting Visuals That <br />
                                 <span style={{ color: 'var(--color-gold)' }}>Speak Voluems.</span>
@@ -102,20 +102,20 @@ const About = () => {
                             <p style={{
                                 fontSize: '18px',
                                 lineHeight: '1.8',
-                                color: '#ccc',
+                                color: 'var(--color-text-muted)',
                                 marginBottom: '40px'
                             }}>
                                 {content}
                             </p>
 
                             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px', marginBottom: '40px' }}>
-                                <div style={{ background: '#111', padding: '25px', borderRadius: '12px', border: '1px solid #222' }}>
+                                <div style={{ background: 'var(--color-card-bg)', padding: '25px', borderRadius: '12px', border: '1px solid var(--color-border)' }}>
                                     <h3 style={{ color: 'var(--color-gold)', marginBottom: '15px', fontSize: '20px', fontWeight: 'bold' }}>Our Mission</h3>
-                                    <p style={{ color: '#aaa', fontSize: '15px', lineHeight: '1.6', margin: 0 }}>{mission}</p>
+                                    <p style={{ color: 'var(--color-text-muted)', fontSize: '15px', lineHeight: '1.6', margin: 0 }}>{mission}</p>
                                 </div>
-                                <div style={{ background: '#111', padding: '25px', borderRadius: '12px', border: '1px solid #222' }}>
+                                <div style={{ background: 'var(--color-card-bg)', padding: '25px', borderRadius: '12px', border: '1px solid var(--color-border)' }}>
                                     <h3 style={{ color: 'var(--color-gold)', marginBottom: '15px', fontSize: '20px', fontWeight: 'bold' }}>Our Vision</h3>
-                                    <p style={{ color: '#aaa', fontSize: '15px', lineHeight: '1.6', margin: 0 }}>{vision}</p>
+                                    <p style={{ color: 'var(--color-text-muted)', fontSize: '15px', lineHeight: '1.6', margin: 0 }}>{vision}</p>
                                 </div>
                             </div>
                         </motion.div>
@@ -161,7 +161,7 @@ const About = () => {
             </section>
 
             {/* Stats Section */}
-            <section style={{ padding: '80px 0', background: '#000', borderTop: '1px solid #222', borderBottom: '1px solid #222' }}>
+            <section style={{ padding: '80px 0', background: 'var(--color-bg)', borderTop: '1px solid var(--color-border)', borderBottom: '1px solid var(--color-border)' }}>
                 <div className="container">
                     <div style={{
                         display: 'grid',
@@ -185,7 +185,7 @@ const About = () => {
                                     lineHeight: 1
                                 }}>{stat.value}</h3>
                                 <p style={{
-                                    color: '#666',
+                                    color: 'var(--color-text-muted)',
                                     textTransform: 'uppercase',
                                     fontWeight: '600',
                                     letterSpacing: '1px',
@@ -198,11 +198,11 @@ const About = () => {
             </section>
 
             {/* Values / Why Choose Us */}
-            <section style={{ padding: '80px 0', background: '#050505' }}>
+            <section style={{ padding: '80px 0', background: 'var(--color-bg)' }}>
                 <div className="container">
                     <div style={{ textAlign: 'center', marginBottom: '80px' }}>
                         <span style={{ color: 'var(--color-gold)', textTransform: 'uppercase', letterSpacing: '3px', fontSize: '12px', fontWeight: 'bold' }}>Core Values</span>
-                        <h2 style={{ fontSize: 'clamp(28px, 4vw, 42px)', fontWeight: 'bold', color: '#fff', marginTop: '20px' }}>
+                        <h2 style={{ fontSize: 'clamp(28px, 4vw, 42px)', fontWeight: 'bold', color: 'var(--color-text)', marginTop: '20px' }}>
                             Why Choose <span style={{ color: 'var(--color-gold)' }}>Print Graphics?</span>
                         </h2>
                     </div>
@@ -226,15 +226,15 @@ const About = () => {
                                 whileHover={{ y: -5, borderColor: 'var(--color-gold)' }}
                                 style={{
                                     padding: '30px',
-                                    background: '#111',
-                                    border: '1px solid #fcca0e',
+                                    background: 'var(--color-card-bg)',
+                                    border: '1px solid var(--color-border)',
                                     borderRadius: '8px',
                                     transition: 'all 0.3s ease'
                                 }}
                             >
                                 <CheckCircle2 size={32} color="var(--color-gold)" style={{ marginBottom: '20px' }} />
-                                <h4 style={{ color: '#fff', fontSize: '20px', fontWeight: 'bold', marginBottom: '15px' }}>{item.title}</h4>
-                                <p style={{ color: '#888', lineHeight: '1.6', margin: 0 }}>{item.desc}</p>
+                                <h4 style={{ color: 'var(--color-text)', fontSize: '20px', fontWeight: 'bold', marginBottom: '15px' }}>{item.title}</h4>
+                                <p style={{ color: 'var(--color-text-muted)', lineHeight: '1.6', margin: 0 }}>{item.desc}</p>
                             </motion.div>
                         ))}
                     </div>
@@ -244,7 +244,7 @@ const About = () => {
             {/* CTA Section */}
             <section style={{
                 padding: '100px 0',
-                background: '#000',
+                background: 'var(--color-bg)',
                 textAlign: 'center',
                 position: 'relative',
                 overflow: 'hidden'
@@ -267,38 +267,34 @@ const About = () => {
                         viewport={{ once: true }}
                         transition={{ duration: 0.8 }}
                     >
-                        <div style={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
+                        <div className="iconic-cta-wrap" style={{
                             gap: 'clamp(10px, 1.5vw, 20px)',
                             marginBottom: '50px',
                             textTransform: 'uppercase',
                             lineHeight: 1,
-                            whiteSpace: 'nowrap',
                             width: '100%'
                         }}>
                             <h2 style={{
-                                fontSize: 'clamp(20px, 4.5vw, 65px)',
+                                fontSize: 'clamp(28px, 6vw, 65px)',
                                 fontWeight: '900',
-                                color: '#fff',
+                                color: 'var(--color-text)',
                                 margin: 0,
                                 flexShrink: 0
                             }}>
                                 Let's Build
                             </h2>
                             <h2 style={{
-                                fontSize: 'clamp(20px, 4.5vw, 65px)',
+                                fontSize: 'clamp(28px, 6vw, 65px)',
                                 fontWeight: '900',
                                 color: 'transparent',
-                                WebkitTextStroke: '2px rgba(255,255,255,0.4)',
+                                WebkitTextStroke: '1px rgba(255,255,255,0.4)',
                                 margin: 0,
                                 flexShrink: 0
                             }}>
                                 Something
                             </h2>
                             <h2 style={{
-                                fontSize: 'clamp(20px, 4.5vw, 65px)',
+                                fontSize: 'clamp(28px, 6vw, 65px)',
                                 fontWeight: '900',
                                 color: 'var(--color-gold)',
                                 margin: 0,
